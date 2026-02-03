@@ -34,11 +34,12 @@ app.post('/chat', async (req, res) => {
         res.status(500).json({ reply: "Server đang bận, thử lại sau nhé!" });
     }
 });
-//Khởi động server chạy tại cổng 3000 (sửa ở trên cùng)
-app.listen(port, () => {
-    console.log(`🚀 Server đang chạy tại: http://localhost:${port}`);
-});
+// gọi phát là trả về view chatbot.html
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'chatbot.html'));
+});
+//Khởi động server chạy tại cổng 3000 (sửa ở trên cùng)
+app.listen(port, () => {
+    console.log(`🚀 Server đang chạy tại: http://localhost:${port}`);
 });
