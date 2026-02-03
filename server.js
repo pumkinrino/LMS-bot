@@ -39,6 +39,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'chatbot.html'));
 });
+app.get('/chatbot.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'chatbot.js'));
+});
 //Khởi động server chạy tại cổng 3000 (sửa ở trên cùng)
 app.listen(port, () => {
     console.log(`🚀 Server đang chạy tại: http://localhost:${port}`);
