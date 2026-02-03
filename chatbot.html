@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor Canvas</title>
+    <style>
+        /* CSS trang trí cho giống App Flutter */
+        body {
+            font-family: sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100vw;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: #4285F4;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .user {
+            align-self: flex-end;
+            background-color: #1976D2;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background-color: #E0E0E0;
+            color: black;
+            border-bottom-left-radius: 2px;
+        }
+
+        .input-area {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            background: white;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        button {
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1565C0;
+        }
+
+        .loading {
+            font-size: 12px;
+            color: gray;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">Chat Bot</div>
+
+        <div class="chat-area" id="chatBox">
+            <div class="message bot">hello muốn học gì nào</div>
+        </div>
+        <div class="loading" id="loadingIndicator">Đợi tí đang dùng não....</div>
+
+        <div class="input-area">
+            <input type="text" id="msgInput" placeholder="Nhập tin nhắn..." onkeypress="handleEnter(event)">
+            <button onclick="sendMsg()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // nhớ thêm /chat nhớ thêm /chat nhớ thêm /chat nhớ thêm /chat nhớ thêm /chat nhớ thêm /chat nhớ thêm /chat nhớ thêm /chat
+        const API_URL = "https://lms-bot-441o.onrender.com/chat";
+        const chatBox = document.getElementById('chatBox');
+        const input = document.getElementById('msgInput');
+        const loading = document.getElementById('loadingIndicator');
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') sendMsg();
+        }
+
+        async function sendMsg() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            input.value = '';
+            loading.style.display = 'block';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                const data = await response.json();
+
+                loading.style.display = 'none';
+                addMessage(data.reply || "Lỗi: Server không trả lời", 'bot');
+
+            } catch (error) {
+                loading.style.display = 'none';
+                addMessage("Lỗi kết nối: " + error, 'bot');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.innerText = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+
+</body>
+
+</html>
