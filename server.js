@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 //Setting của gemini
 const API_KEY = process.env.GEMINI_API_KEY; // MÃ hóa thằng render.com là thằng giữ API key nó sẽ tìm đúng biến này rồi thay thế bằng api key của mình vào
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" }); // phải là 2.5 mới chạy ko hiểu sao 1.5 ko chạy dc =))
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // phải là 2.5 mới chạy ko hiểu sao 1.5 ko chạy dc =))
 
 //API nhận tin nhắn từ người dùng chỉ nhận đường dẫn /chat
 app.post('/chat', async (req, res) => {
