@@ -10,12 +10,10 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// --- CẤU HÌNH DEEPSEEK ---
-// DeepSeek dùng chung chuẩn với OpenAI, chỉ cần đổi baseURL
-const openai = new OpenAI({
-    baseURL: 'https://api.openai.com/v1', 
-    apiKey: process.env.OPENAI_API_KEY // Nhớ đổi tên biến môi trường trên Render/File .env
-});
+//Setting của gemini
+const API_KEY = process.env.GEMINI_API_KEY; // MÃ hóa thằng render.com là thằng giữ API key nó sẽ tìm đúng biến này rồi thay thế bằng api key của mình vào
+const genAI = new GoogleGenerativeAI(API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // phải là 2.5 mới chạy ko hiểu sao 1.5 ko chạy dc =))
 
 app.post('/chat', async (req, res) => {
     try {
