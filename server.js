@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // --- CẤU HÌNH DEEPSEEK ---
 // DeepSeek dùng chung chuẩn với OpenAI, chỉ cần đổi baseURL
 const openai = new OpenAI({
-    baseURL: 'https://api.deepseek.com', 
+    baseURL: 'https://api.openai.com', 
     apiKey: process.env.OPENAI_API_KEY // Nhớ đổi tên biến môi trường trên Render/File .env
 });
 
