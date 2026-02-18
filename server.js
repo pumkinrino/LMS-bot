@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // --- CẤU HÌNH DEEPSEEK ---
 // DeepSeek dùng chung chuẩn với OpenAI, chỉ cần đổi baseURL
 const openai = new OpenAI({
-    baseURL: 'https://api.openai.com', 
+    baseURL: 'https://api.openai.com/v1', 
     apiKey: process.env.OPENAI_API_KEY // Nhớ đổi tên biến môi trường trên Render/File .env
 });
 
@@ -25,7 +25,7 @@ app.post('/chat', async (req, res) => {
         // Gọi API DeepSeek
         const completion = await openai.chat.completions.create({
             messages: [{ role: "user", content: userMessage }],
-            model: "deepseek-chat", // Model chat (V3), hoặc dùng "deepseek-coder" nếu code
+            model: "gpt-3o-mini", // Model chat (V3), hoặc dùng "deepseek-coder" nếu code
         });
 
         // Lấy nội dung trả về (cấu trúc khác Gemini một chút)
