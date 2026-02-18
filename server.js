@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 // DeepSeek dùng chung chuẩn với OpenAI, chỉ cần đổi baseURL
 const openai = new OpenAI({
     baseURL: 'https://api.deepseek.com', 
-    apiKey: process.env.DEEPSEEK_API_KEY // Nhớ đổi tên biến môi trường trên Render/File .env
+    apiKey: process.env.OPENAI_API_KEY // Nhớ đổi tên biến môi trường trên Render/File .env
 });
 
 app.post('/chat', async (req, res) => {
